@@ -5,3 +5,5 @@ This will be a tinder style app to maching sheds on antlers in a gives county or
 
 We should use firebase auth
 And backbone for backend
+
+we need someway to check for bad images

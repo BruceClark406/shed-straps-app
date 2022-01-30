@@ -7,3 +7,5 @@ We should use firebase auth
 And backbone for backend
 
 we need someway to check for bad images
+
+and somewhere to store those images

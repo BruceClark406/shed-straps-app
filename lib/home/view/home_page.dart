@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shed_straps_app/home/bloc/app_bloc.dart';
-import 'package:shed_straps_app/l10n/l10n.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,15 +14,48 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
 
   @override
+  _HomeViewState createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  bool expanded = true;
+  bool expanding = false;
+  double width = 200;
+
+  @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.counterAppBarTitle)),
-      body: const Center(child: CounterText()),
+      appBar: AppBar(title: const Text('home')),
+      body: AnimatedContainer(
+        duration: const Duration(seconds: 1),
+        curve: Curves.fastOutSlowIn,
+        width: width,
+        color: Colors.grey,
+        // onEnd: () => setState(() {
+        // expanding = true;
+        // }),
+        child: const ListTile(
+          // title: AnimatedDefaultTextStyle(
+          //   duration: const Duration(milliseconds: 300),
+          //   style: TextStyle(
+          //     fontSize: _fontSize,
+          //     color: _color,
+          //     fontWeight: FontWeight.bold,
+          //   ),
+          //   child: const Text('home'),
+          // ),
+          title: Text(
+            'settings',
+            overflow: TextOverflow.fade,
+            softWrap: false,
+          ),
+          leading: Icon(Icons.settings),
+        ),
+      ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -37,6 +69,19 @@ class HomeView extends StatelessWidget {
             onPressed: () =>
                 context.read<AppBloc>().add(const DecrementFromCounter()),
             child: const Icon(Icons.remove),
+          ),
+          const SizedBox(height: 8),
+          FloatingActionButton(
+            onPressed: () {
+              setState(() {
+                expanding = true;
+                expanded = !expanded;
+                width = expanded ? 200 : 70;
+                expanding = true;
+                expanding = false;
+              });
+            },
+            child: const Icon(Icons.animation),
           ),
         ],
       ),
